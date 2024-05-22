@@ -31,3 +31,7 @@ jobs:
         # add the -pre repo
       - run: conan remote add rnd-conan-pre ${{ env.REPO_PRE }}
       - run: conan remote login rnd-conan-pre ${{ vars.JFROG_USERNAME }} --password ${{ secrets.JFROG_ACCESS_TOKEN }}
+        # upload dbus-cxx
+      - run: conan create recipes/dbus-cxx/2.x.x --version 2.4.0 --build=missing
+      - run: conan upload --remote rnd-conan-ci --only-recipe dbus-cxx/2.4.0
+      - run: conan upload --remote rnd-conan-pre --only-recipe dbus-cxx/2.4.0
